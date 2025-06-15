@@ -5,11 +5,13 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        for i in range(len(nums)):
-            for j in range(i + 1, len(nums)):
-                if nums[i] + nums[j] == target:
-                    return [i, j]
-
+        
+        num_map={}
+        for i,x in enumerate(nums):
+            remaining = target-x
+            if remaining in num_map:
+                return [num_map[remaining],i]
+            num_map[x]=i
 
 
 
