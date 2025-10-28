@@ -4,23 +4,31 @@ class Solution(object):
         :type grid: List[List[str]]
         :rtype: int
         """
-        def dfs(r,c):
-            if r<0 or c<0 or r>=len(grid) or c>=len(grid[0]) or grid[r][c]=='0':
-                return
-            grid[r][c]='0'
-            dfs(r-1,c)
-            dfs(r+1,c)
-            dfs(r,c+1)
-            dfs(r,c-1)
-
-        num_island=0
+        count=0
+        dir = ((-1,0),(1,0),(0,-1),(0,1))
+        queue = deque()
         for i in range(len(grid)):
             for j in range(len(grid[0])):
                 if grid[i][j]=='1':
-                    num_island+=1
-                    dfs(i,j)
+                    count+=1
+                    queue = deque()
+                    queue.append((i,j))
+                    grid[i][j]='0'
+                    while queue:
+                        x,y = queue.popleft()
+                        for dx,dy in dir:
+                            nx,ny=x+dx,y+dy
+                            if nx<0 or ny<0 or nx>=len(grid) or ny>=len(grid[0]) or grid[nx][ny]=='0':
+                                continue
+                            grid[nx][ny]='0'
+                            queue.append((nx,ny))
 
-        return num_island
+
+        return count
+
+                        
+
+
 
 
         
